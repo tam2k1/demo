@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nhấn để bắt đầu</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            /* Căn giữa theo chiều ngang */
+            align-items: center;
+            font-family: Arial, sans-serif;
+            height: 100vh;
+            /* Chiều cao 100% màn hình */
+            margin: 0;
+            text-align: center;
+            background-image: url("image/backgr.JPG");
+            color: rgb(230, 155, 155);
+        }
+        
+        #loading-container {
+            width: 50%;
+            background-color: #ef9494;
+            margin: 50px auto;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+            display: none;
+        }
+        
+        #icon_load_bar {
+            width: auto;
+            display: flex;
+            flex-direction: row;
+            background-color: white;
+            justify-content: space-around;
+        }
+        
+        #icon1,
+        #icon2,
+        #icon3 {
+            flex-direction: row;
+            width: 40px;
+            height: 30px;
+            background-size: cover;
+            background-image: url(image/icon1.JPG);
+            z-index: 100;
+            display: none;
+        }
+        
+        #loading-bar {
+            width: 0%;
+            height: 30px;
+            color: while;
+            background-color: #ff00eeba;
+            text-align: center;
+            line-height: 30px;
+            font-weight: bold;
+            transition: width 0.1s linear;
+            z-index: 1000;
+        }
+        
+        #start-btn,
+        #next-btn {
+            display: flex;
+            padding: 15px 30px;
+            font-size: 20px;
+            background-color: #d679c2;
+            color: #452424;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 50px;
+        }
+        
+        #next-btn {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Món quà nhỏ cho em nhân ngày 8/3</h1>
+    <button id="start-btn">Bắt đầu</button>
+
+    <div id="loading-container">
+        <div id="icon_load_bar">
+            <div id="icon1"></div>
+            <div id="icon2"></div>
+            <div id="icon3"></div>
+        </div>
+        <div id="loading-bar">0%</div>
+    </div>
+    <button id="next-btn">Click me!</button>
+
+    <script>
+        let progress = 0;
+        let loadingBar = document.getElementById("loading-bar");
+        let loadingContainer = document.getElementById("loading-container");
+        let startBtn = document.getElementById("start-btn");
+        let nextBtn = document.getElementById("next-btn");
+        let icon1 = document.getElementById("icon1");
+        let icon2 = document.getElementById("icon2");
+        let icon3 = document.getElementById("icon3");
+
+        function updateLoading() {
+            progress += 1;
+            loadingBar.style.width = progress + "%";
+            loadingBar.textContent = progress + "%";
+            if (progress < 100) {
+                if (progress >= 30) icon1.style.display = "inline";
+                if (progress >= 60) icon2.style.display = "inline";
+                if (progress >= 90) icon3.style.display = "inline";
+
+                setTimeout(updateLoading, 30); // Điều chỉnh tốc độ load
+            } else {
+                setTimeout(() => {
+                    nextBtn.style.display = "inline-block"; // Hiện nút "Click me!"
+                }, 500);
+            }
+
+        }
+
+        startBtn.addEventListener("click", function() {
+            startBtn.style.display = "none"; // Ẩn nút bắt đầu
+            loadingContainer.style.display = "block"; // Hiện thanh loading
+            updateLoading();
+        });
+
+        nextBtn.addEventListener("click", function() {
+            window.location.href = "page2.html"; // Chuyển sang trang tiếp theo
+        });
+    </script>
+
+</body>
+
+</html>
